@@ -1,11 +1,14 @@
-version: '2'
+ 
+version: "3"
 services:
-  postfix:
-    image: juanluisbaptiste/postfix:latest
-    expose:
-    - "25"
-    env_file:
-      - .env
+  server:
     restart: always
-    volumes:
-     - "/etc/localtime:/etc/localtime:ro"
+    image: madeofpendletonwool/postfix
+    environment:
+      - SMTP_SERVER=smtp.office365.com
+      - SMTP_USERNAME=send_email@email.com
+      - SMTP_PASSWORD=mysecret
+      - SERVER_HOSTNAME=send_email.email.com
+      - SEND_ADDRESS=send_email@email.com
+    ports:
+      - "25:25"

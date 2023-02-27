@@ -120,6 +120,19 @@ if [ ! -z "${MESSAGE_SIZE_LIMIT}" ]; then
   echo "Setting configuration option message_size_limit with value: ${MESSAGE_SIZE_LIMIT}"
 fi
 
+# Create the sender canonical maps file and populate it with the sender address variable
+echo "/.+/    $SEND_ADDRESS" > /etc/postfix/sender_canonical_maps
+
+# Create the header check file and populate it with the sender address variable
+echo "/From:.*/ REPLACE From: $SEND_ADDRESS" > /etc/postfix/header_check
+
+# Append the postfix configuration lines to the main.cf file
+cat <<EOT >> /etc/postfix/main.cf
+sender_canonical_classes = envelope_sender, header_sender
+sender_canonical_maps = regexp:/etc/postfix/sender_canonical_maps
+smtp_header_checks = regexp:/etc/postfix/header_check
+EOT
+
 #Start services
 
 # If host mounting /var/spool/postfix, we need to delete old pid file before
