@@ -1,6 +1,7 @@
 #Dockerfile for a Postfix email relay service
-FROM alpine:3.15
-# Maintainer Collin Pendleton - collinp@collinpendleton.com
+
+FROM alpine:3.16
+MAINTAINER Figma Ballz yes@gmail.com
 
 RUN apk update && \
     apk add bash gawk cyrus-sasl cyrus-sasl-login cyrus-sasl-crammd5 mailx \
