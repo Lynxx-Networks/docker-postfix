@@ -3,7 +3,7 @@ version: "3"
 services:
   server:
     restart: always
-    image: madeofpendletonwool/postfix
+    image: 3rtdevops/postfix
     environment:
       - SMTP_SERVER=smtp.office365.com
       - SMTP_USERNAME=send_email@email.com
